@@ -9,21 +9,30 @@ import (
 
 func TestPlayerCreation(t *testing.T) {
 	log.Println("TEST: player creation test")
-	player := player.GetInstance()
+	playerToTest := player.GetInstance()
 
-	if player.GetPositionX() != 1 {
+	if playerToTest.GetPositionX() != 1 {
 		log.Println("Start-PositionX not 1")
 		t.Fail()
 	}
-	if player.GetPositionY() != 1 {
+	if playerToTest.GetPositionY() != 1 {
 		log.Println("Start-PositionY not 1")
 		t.Fail()
 	}
 }
 
 func TestPlayerMoveForward(t *testing.T) {
-	log.Println("TEST: player creation test")
-	player := player.GetInstance()
+	log.Println("TEST: player movement forward test")
+	playerToTest := player.GetInstance()
 
-	player.Move(player.MovementDirection.FORWARD)
+	playerToTest.Move(player.FORWARD)
+
+	if playerToTest.GetPositionX() != 1 {
+		log.Println("After moving forward, PositionX should not change")
+		t.Fail()
+	}
+	if playerToTest.GetPositionY() != 0 {
+		log.Println("PositionY after moving forward is not 0")
+		t.Fail()
+	}
 }

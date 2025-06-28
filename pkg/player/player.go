@@ -5,7 +5,7 @@ import (
 )
 
 type Player interface {
-	Move(MovementDirection)
+	Move(movementDirection)
 	GetPositionX() int32
 	GetPositionY() int32
 }
@@ -14,10 +14,13 @@ type player struct {
 	positonY int32
 }
 
-type MovementDirection int16
+type movementDirection struct {
+	additionToPositionX int16
+	additionToPositionY int16
+}
 
-const (
-	FORWARD MovementDirection = 1
+var (
+	FORWARD movementDirection = movementDirection{0, -1}
 )
 
 func GetInstance() Player {
@@ -28,8 +31,14 @@ func GetInstance() Player {
 	}
 }
 
-func (p player) Move(direction MovementDirection) {
+func (p player) Move(direction movementDirection) {
+	log.Println("Moving the player ", direction)
+	log.Println("Before moving ", p.positonX, " ", p.positonY)
 
+	p.positonX += int32(direction.additionToPositionX)
+	p.positonY += int32(direction.additionToPositionY)
+
+	log.Println("After moving ", p.positonX, " ", p.positonY)
 }
 
 func (p player) GetPositionX() int32 {
