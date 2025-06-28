@@ -10,8 +10,8 @@ type Player interface {
 	GetPositionY() int32
 }
 type player struct {
-	positonX int32
-	positonY int32
+	positonX *int32
+	positonY *int32
 }
 
 type movementDirection struct {
@@ -25,27 +25,27 @@ var (
 
 func GetInstance() Player {
 	log.Println("created player")
-	return player{
-		positonX: int32(1),
-		positonY: int32(1),
-	}
+	player := player{}
+	*player.positonX = int32(1)
+	*player.positonY = int32(1)
+	return player
 }
 
 func (p player) Move(direction movementDirection) {
 	log.Println("Moving the player ", direction)
 	log.Println("Before moving ", p.positonX, " ", p.positonY)
 
-	p.positonX += int32(direction.additionToPositionX)
-	p.positonY += int32(direction.additionToPositionY)
+	*p.positonX += int32(direction.additionToPositionX)
+	*p.positonY += int32(direction.additionToPositionY)
 
 	log.Println("After moving ", p.positonX, " ", p.positonY)
 }
 
 func (p player) GetPositionX() int32 {
-	return p.positonX
+	return *p.positonX
 
 }
 
 func (p player) GetPositionY() int32 {
-	return p.positonY
+	return *p.positonY
 }
