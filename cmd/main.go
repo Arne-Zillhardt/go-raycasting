@@ -1,7 +1,7 @@
 package main
 
-import "fmt"
+import "github.com/arne-zillhardt/raycasting/pkg/gui"
 
 func main() {
-	fmt.Println("Hello world")
+	gui.RunGame()
 }

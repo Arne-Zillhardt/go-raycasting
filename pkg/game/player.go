@@ -1,14 +1,9 @@
-package player
+package game
 
 import (
 	"log"
 )
 
-type Player interface {
-	Move(movementDirection)
-	GetPositionX() int32
-	GetPositionY() int32
-}
 type player struct {
 	positonX *int32
 	positonY *int32
@@ -21,11 +16,18 @@ type movementDirection struct {
 
 var (
 	FORWARD movementDirection = movementDirection{0, -1}
+	BACKWARD movementDirection = movementDirection{0, 1}
+	LEFT movementDirection = movementDirection{-1, 0}
+	RIGHT movementDirection = movementDirection{1, 0}
 )
 
-func GetInstance() Player {
-	log.Println("created player")
-	player := player{}
+func initPlayer() player {
+	log.Println("Created player")
+	player := player{
+		positonX: new(int32),
+		positonY: new(int32),
+	}
+
 	*player.positonX = int32(1)
 	*player.positonY = int32(1)
 	return player
@@ -41,11 +43,6 @@ func (p player) Move(direction movementDirection) {
 	log.Println("After moving ", p.positonX, " ", p.positonY)
 }
 
-func (p player) GetPositionX() int32 {
-	return *p.positonX
-
-}
-
-func (p player) GetPositionY() int32 {
-	return *p.positonY
+func (p player) position() (int, int) {
+	return int(*p.positonX), int(*p.positonY)
 }
