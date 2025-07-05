@@ -22,23 +22,32 @@ type game struct {
 
 func (g game) Update() error {
 	if ebiten.IsKeyPressed(ebiten.KeyW) {
-		g.player.Move(FORWARD)
+		g.player.move(FORWARD)
 	}
 	if ebiten.IsKeyPressed(ebiten.KeyS) {
-		g.player.Move(BACKWARD)
+		g.player.move(BACKWARD)
 	}
 	if ebiten.IsKeyPressed(ebiten.KeyA) {
-		g.player.Move(LEFT)
+		g.player.move(LEFT)
 	}
 	if ebiten.IsKeyPressed(ebiten.KeyD) {
-		g.player.Move(RIGHT)
+		g.player.move(RIGHT)
 	}
+
+	if ebiten.IsKeyPressed(ebiten.KeyQ) {
+		g.player.changeView(INCREASE)
+	}
+	if ebiten.IsKeyPressed(ebiten.KeyE) {
+		g.player.changeView(DECREASE)
+	}
+
 	return nil
 }
 
 func (g game) Draw(screen *ebiten.Image) {
 	screen.Fill(color.RGBA{0xff, 0xff, 0xff, 0xff})
 	imageToDraw := ebiten.NewImage(320, 200)
+
 	for y := range 200 {
 		for x := range 320 {
 			colorToDraw := color.RGBA{0x70, 0x70, 0x70, 0xff}
@@ -50,10 +59,14 @@ func (g game) Draw(screen *ebiten.Image) {
 			if *g.player.positonX == int32(x) && *g.player.positonY == int32(y) {
 				colorToDraw = color.RGBA{0xff, 0xff, 0xff, 0xff}
 
-				vector.StrokeLine(imageToDraw, float32(x), float32(y), 0, 0, 1, colorToDraw, false)
 			}
 			imageToDraw.Set(x, y, colorToDraw)
 		}
+
+		colorToDraw := color.RGBA{0xff, 0xff, 0xff, 0xff}
+		lineX, lineY := g.player.calculateLinePosition()
+		playerX, playerY := g.player.position()
+		vector.StrokeLine(imageToDraw, float32(playerX), float32(playerY), float32(lineX), float32(lineY), 1, colorToDraw, false)
 	}
 
 	screen.DrawImage(imageToDraw, nil)

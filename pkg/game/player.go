@@ -2,6 +2,7 @@ package game
 
 import (
 	"log"
+	"math"
 )
 
 type player struct {
@@ -14,12 +15,16 @@ type movementDirection struct {
 	additionToPositionX int16
 	additionToPositionY int16
 }
+type viewChange int16
 
 var (
 	FORWARD  movementDirection = movementDirection{0, -1}
 	BACKWARD movementDirection = movementDirection{0, 1}
 	LEFT     movementDirection = movementDirection{-1, 0}
 	RIGHT    movementDirection = movementDirection{1, 0}
+
+	INCREASE viewChange = 5
+	DECREASE viewChange = -5
 )
 
 func initPlayer() player {
@@ -36,7 +41,7 @@ func initPlayer() player {
 	return player
 }
 
-func (p player) Move(direction movementDirection) {
+func (p player) move(direction movementDirection) {
 	log.Println("Moving the player ", direction)
 	log.Println("Before moving ", *p.positonX, " ", *p.positonY)
 
@@ -46,6 +51,32 @@ func (p player) Move(direction movementDirection) {
 	log.Println("After moving ", *p.positonX, " ", *p.positonY)
 }
 
+func (p player) changeView(change viewChange) {
+	*p.viewAngle += float64(change)
+	if *p.viewAngle < 0 {
+		*p.viewAngle = 360 + *p.viewAngle
+	}
+
+	if *p.viewAngle > 360 {
+		*p.viewAngle = *p.viewAngle - 360
+	}
+
+	log.Println("ViewAngle: ", *p.viewAngle)
+}
+
 func (p player) position() (int, int) {
 	return int(*p.positonX), int(*p.positonY)
+}
+
+func (p player) calculateLinePosition() (float64, float64) {
+	length := 5
+	angleInRadiens := *p.viewAngle * (math.Pi/180)
+
+	lineX := float64(*p.positonX) + float64(length) * math.Sin(angleInRadiens)
+	lineY := float64(*p.positonY) + float64(length) * math.Cos(angleInRadiens)
+
+	log.Println("Calculated x", lineX)
+	log.Println("Calculated y", lineY)
+
+	return lineX, lineY
 }
