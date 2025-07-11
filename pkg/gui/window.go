@@ -5,7 +5,6 @@ import (
 
 	"github.com/arne-zillhardt/raycasting/pkg/game"
 	"github.com/hajimehoshi/ebiten/v2"
-	//"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 )
 
 func RunGame() {

@@ -12,13 +12,14 @@ func TestInitialization(t *testing.T) {
 
 	gameWithGameMap := game.GetInstance()
 
-	for val1 := range 10 {
+	mapSize := gameWithGameMap.Size()
+	for val1 := range mapSize {
 		if !gameWithGameMap.IsWall(uint32(0), uint32(val1)) {
 			log.Println("No first horizontal wall")
 			log.Println("X: 0 Y: ", val1)
 			t.FailNow()
 		}
-		if !gameWithGameMap.IsWall(uint32(9), uint32(val1)) {
+		if !gameWithGameMap.IsWall(uint32(mapSize-1), uint32(val1)) {
 			log.Println("No last horizontal wall")
 			log.Println("X: 9 Y: ", val1)
 			t.FailNow()
@@ -28,7 +29,7 @@ func TestInitialization(t *testing.T) {
 			log.Println("X: ", val1, " Y: 0")
 			t.FailNow()
 		}
-		if !gameWithGameMap.IsWall(uint32(val1), uint32(9)) {
+		if !gameWithGameMap.IsWall(uint32(val1), uint32(mapSize-1)) {
 			log.Println("No first vertical wall")
 			log.Println("X: ", val1, " Y: 9")
 			t.FailNow()
