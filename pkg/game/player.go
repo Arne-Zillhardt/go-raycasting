@@ -75,7 +75,7 @@ func (p player) position() (int, int) {
 }
 
 func (p player) calculateLinePosition(changeOfAngle float64) (float64, float64) {
-	length := 5
+	length := 1
 	playerAngle := (*p.viewAngle + changeOfAngle)
 	log.Println("Angle to calculate with: ", playerAngle)
 	angleInRadiens :=  playerAngle * (math.Pi/180)
