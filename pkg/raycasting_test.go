@@ -1,0 +1,83 @@
+package pkg
+
+import (
+	"log"
+	"math"
+	"testing"
+)
+
+func TestSimpleRayCalculation(t *testing.T) {
+	log.Println("Test the calculation of a ray")
+
+	testMap := getTestMap()
+	playerX := 1.0
+	playerY := 2.0
+	var rayDirX float64 = -1
+	var rayDirY float64 = -0.66
+
+	distance, side := calculateRayLength(playerX, playerY, rayDirX, rayDirY, testMap)
+
+	if distance != 1 {
+		log.Println("Expected the distance to be 1")
+		t.Fail()
+	}
+
+	if side != 0 {
+		log.Println("Expected the side to be 0")
+		t.Fail()
+	}
+}
+
+func TestCalculationOfDeltaDistance(t *testing.T) {
+	log.Println("Test the calculation of the delta-distance")
+
+	var rayDir float64 = 10
+
+	deltaDistance := calculateDeltaDistance(rayDir)
+
+	if deltaDistance != 0.1 {
+		log.Println("Expected the delta-distance to be 0.1")
+		t.Fail()
+	}
+
+	rayDir = 0
+
+	deltaDistance = calculateDeltaDistance(rayDir)
+
+	if deltaDistance != math.MaxFloat64 {
+		log.Println("Expected the delta-distance to be the maximum value of a float")
+		t.Fail()
+	}
+}
+
+func TestCalculationOfSideDistanceAndStep(t *testing.T) {
+	log.Println("Test the calculation of side-distance and step")
+
+	var rayDir float64 = 1
+	var playerPosition float64 = 10.5
+	var deltaDistance float64 = 1
+
+	step, sideDist := calculateSideDistanceAndStep(rayDir, playerPosition, deltaDistance)
+
+	if step != 1 {
+		log.Println("Expected the step to be 1")
+		t.Fail()
+	}
+	if sideDist != 0.5 {
+		log.Println("Expected the side-distance to be 0.5")
+		t.Fail()
+	}
+
+	rayDir = -1
+
+	step, sideDist = calculateSideDistanceAndStep(rayDir, playerPosition, deltaDistance)
+
+	if step != -1 {
+		log.Println("Expected the step to be 1")
+		t.Fail()
+	}
+	if sideDist != 0.5 {
+		log.Println("Expected the side-distance to be 0.5")
+		t.Fail()
+	}
+}
