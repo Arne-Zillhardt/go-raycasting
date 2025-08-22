@@ -28,15 +28,23 @@ func calculateRayLength(playerX float64, playerY float64, rayDirX float64, rayDi
 		}
 
 		if gameMap[mapY][mapX] != 0 {
-			break
+			hit = 1
 		}
 	}
 
-	return 1.0, side
+	perpWallDist := sideDistX - deltaDistX
+	if side == 0 {
+		perpWallDist = sideDistY - deltaDistY
+	}
+	if perpWallDist == 0 {
+		perpWallDist = 1
+	}
+
+	return perpWallDist, side
 }
 
 func calculateDeltaDistance(rayDir float64) float64 {
-	deltaDist := math.Abs(1/rayDir)
+	deltaDist := math.Abs(1 / rayDir)
 	if rayDir == 0 {
 		deltaDist = math.MaxFloat64
 	}
@@ -44,7 +52,7 @@ func calculateDeltaDistance(rayDir float64) float64 {
 	return deltaDist
 }
 
-func calculateSideDistanceAndStep(rayDir float64, playerPosition float64, deltaDist float64) (	int, float64) {
+func calculateSideDistanceAndStep(rayDir float64, playerPosition float64, deltaDist float64) (int, float64) {
 	mapPosition := math.Floor(playerPosition)
 
 	step := 1

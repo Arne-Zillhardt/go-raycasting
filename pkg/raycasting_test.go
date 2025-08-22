@@ -13,16 +13,18 @@ func TestSimpleRayCalculation(t *testing.T) {
 	playerX := 1.0
 	playerY := 2.0
 	var rayDirX float64 = -1
-	var rayDirY float64 = -0.66
+	var rayDirY float64 = 0.66
 
 	distance, side := calculateRayLength(playerX, playerY, rayDirX, rayDirY, testMap)
 
 	if distance != 1 {
+        log.Println("Distance: ", distance)
 		log.Println("Expected the distance to be 1")
 		t.Fail()
 	}
 
 	if side != 0 {
+        log.Println("Side: ", side)
 		log.Println("Expected the side to be 0")
 		t.Fail()
 	}
