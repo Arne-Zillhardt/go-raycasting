@@ -10,12 +10,13 @@ func TestSimpleRayCalculation(t *testing.T) {
 	log.Println("Test the calculation of a ray")
 
 	testMap := getTestMap()
-	playerX := 1.0
-	playerY := 2.0
+	player := player{}
+	player.positionX = 1.0
+	player.positionY = 2.0
 	var rayDirX float64 = -1
 	var rayDirY float64 = 0.66
 
-	distance, side := calculateRayLength(playerX, playerY, rayDirX, rayDirY, testMap)
+	distance, side := calculateRayLength(player, testMap)
 
 	if distance != 1 {
         log.Println("Distance: ", distance)

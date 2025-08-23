@@ -4,16 +4,16 @@ import (
 	"math"
 )
 
-func calculateRayLength(playerX float64, playerY float64, rayDirX float64, rayDirY float64, gameMap [][]uint) (float64, int) {
+func calculateRayLength(player player, rayDirX float64, rayDirY float64, gameMap [][]uint) (float64, int) {
 	deltaDistX := calculateDeltaDistance(rayDirX)
 	deltaDistY := calculateDeltaDistance(rayDirY)
 
-	stepX, sideDistX := calculateSideDistanceAndStep(rayDirX, playerX, deltaDistX)
-	stepY, sideDistY := calculateSideDistanceAndStep(rayDirY, playerY, deltaDistY)
+	stepX, sideDistX := calculateSideDistanceAndStep(rayDirX, player.positionX, deltaDistX)
+	stepY, sideDistY := calculateSideDistanceAndStep(rayDirY, player.positionY, deltaDistY)
 
 	side := 0
-	mapX := int(math.Floor(playerX))
-	mapY := int(math.Floor(playerY))
+	mapX := int(math.Floor(player.positionX))
+	mapY := int(math.Floor(player.positionY))
 
 	hit := 0
 	for hit == 0 {

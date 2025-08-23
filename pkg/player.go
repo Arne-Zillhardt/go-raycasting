@@ -1,11 +1,13 @@
 package pkg
 
-type MovementDirections struct {
-}
+const planeX float64 = 0
+const planeY float64 = 0.66
 
 type player struct {
 	positionX float64
 	positionY float64
+	dirX float64
+	dirY float64
 }
 
 func createPlayer(gameMap [][]uint) (player player) {
@@ -24,4 +26,13 @@ func createPlayer(gameMap [][]uint) (player player) {
 	}
 
 	return player
+}
+
+func (p *player) getRayDir(horizontalPosition int, horizontalLength int) (float64, float64) {
+	var positionOnCamera float64 = 2 * float64(horizontalPosition) / float64(horizontalLength) - 1
+
+	rayDirX := p.dirX + planeX * positionOnCamera
+	rayDirY := p.dirY + planeY * positionOnCamera
+
+	return rayDirX, rayDirY
 }
