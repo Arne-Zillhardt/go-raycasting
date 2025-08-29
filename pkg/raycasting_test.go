@@ -9,23 +9,50 @@ import (
 func TestSimpleRayCalculation(t *testing.T) {
 	log.Println("Test the calculation of a ray")
 
+	dirX, dirY := -1.0, 0.0
+	planeX, planeY := 0.0, 0.66
+
 	testMap := getTestMap()
 	player := player{}
 	player.positionX = 1.0
 	player.positionY = 2.0
-	var rayDirX float64 = -1
-	var rayDirY float64 = 0.66
 
-	distance, side := calculateRayLength(player, testMap)
+	w := 640
+	x := 320
+
+	cameraX := 2 * float64(x) / float64(w) - 1
+	var rayDirX float64 = dirX + planeX * cameraX
+	var rayDirY float64 = dirY + planeY * cameraX
+
+	distance, side := calculateRayLength(player, rayDirX, rayDirY, testMap)
 
 	if distance != 1 {
-        log.Println("Distance: ", distance)
+		log.Println("Distance: ", distance)
 		log.Println("Expected the distance to be 1")
 		t.Fail()
 	}
 
 	if side != 0 {
-        log.Println("Side: ", side)
+		log.Println("Side: ", side)
+		log.Println("Expected the side to be 0")
+		t.Fail()
+	}
+
+	dirX = 1
+
+	rayDirX = dirX + planeX * cameraX
+	rayDirY = dirY + planeY * cameraX
+
+	distance, side = calculateRayLength(player, rayDirX, rayDirY, testMap)
+
+	if distance != 22 {
+		log.Println("Distance: ", distance)
+		log.Println("Expected the distance to be 22")
+		t.Fail()
+	}
+
+	if side != 0 {
+		log.Println("Side: ", side)
 		log.Println("Expected the side to be 0")
 		t.Fail()
 	}

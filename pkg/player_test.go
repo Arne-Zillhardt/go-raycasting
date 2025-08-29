@@ -17,6 +17,61 @@ func TestPlayerCreation(t *testing.T) {
 		log.Println("PositionY: ", instanceToTest.positionY)
 		t.Fail()
 	}
+
+	if instanceToTest.dirX != -1 || instanceToTest.dirY != 0 {
+		log.Println("Expected other rotation")
+		log.Println("DirX: ", instanceToTest.dirX)
+		log.Println("DirY: ", instanceToTest.dirY)
+		t.Fail()
+	}
+
+
+	if instanceToTest.planeX != 0 || instanceToTest.planeY != 0.66 {
+		log.Println("Expected other plane")
+		log.Println("PlaneX: ", instanceToTest.planeX)
+		log.Println("PlaneY: ", instanceToTest.planeY)
+		t.Fail()
+	}
+}
+
+func TestPlayerMovement(t *testing.T) {
+	log.Println("TEST: Test the movement of player")
+	instanceToTest := createPlayer(getTestMap())
+	instanceToTest.positionX = 1
+	instanceToTest.positionY = 2
+	deltaTime := 1.0
+
+	instanceToTest.move(FORWARD, deltaTime)
+
+	if instanceToTest.positionX != 1 || instanceToTest.positionY != 1 {
+		log.Println("Expected other position")
+		log.Println("PositionX: ", instanceToTest.positionX)
+		log.Println("PositionY: ", instanceToTest.positionY)
+		t.Fail()
+	}
+}
+
+func TestPlayerRotation(t *testing.T) {
+	log.Println("TEST: Test the movement of player")
+	instanceToTest := createPlayer(getTestMap())
+	deltaTime := 5.0
+	instanceToTest.dirX = -1
+	instanceToTest.dirY = 0
+
+	instanceToTest.rotateRight(deltaTime) Apprenticeship
+	
+	if instanceToTest.dirX != 1 || instanceToTest.dirY != 0 {
+		log.Println("Expected other rotation")
+		log.Println("DirX: ", instanceToTest.dirX)
+		log.Println("DirY: ", instanceToTest.dirY)
+		t.Fail()
+	}
+	if instanceToTest.planeX != 0 || instanceToTest.planeY != 0.66 {
+		log.Println("Expected other rotation")
+		log.Println("PlaneX: ", instanceToTest.planeX)
+		log.Println("PlaneY: ", instanceToTest.planeY)
+		t.Fail()
+	}
 }
 
 func getTestMap() [][]uint {

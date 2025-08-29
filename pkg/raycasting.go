@@ -33,7 +33,7 @@ func calculateRayLength(player player, rayDirX float64, rayDirY float64, gameMap
 	}
 
 	perpWallDist := sideDistX - deltaDistX
-	if side == 0 {
+	if side == 1 {
 		perpWallDist = sideDistY - deltaDistY
 	}
 	if perpWallDist == 0 {

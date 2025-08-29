@@ -9,7 +9,6 @@ import (
 
 func main() {
 	ebiten.SetWindowSize(640, 480)
-	ebiten.SetWindowTitle("Hello, World!")
 	application := &pkg.Application{}
 	application.Init()
 
